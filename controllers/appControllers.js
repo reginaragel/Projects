@@ -1,11 +1,12 @@
-const newApp=require('../models/appModels');
+const App=require('../models/appModels');
 
 
 
-exports.saveApp =  (req, res) => {
-
-    res.send('user saved')
-
+exports.saveApp =async(req, res) => {
+    
+     
 }
+
+
 
 
