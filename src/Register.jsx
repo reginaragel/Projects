@@ -15,25 +15,29 @@ const Register = ({ onRegister }) => {
       ...formData,
       [e.target.name]: e.target.value
     });
+
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/register', formData);
-      if (response.status === 201) {
+      const response = await axios.post('http://localhost:5000/api/v1/register',formData,{
+        headers:{'Content-Type': 'multipart/form-data',}
+      });
+      console.log('App Registered Successfully')
+      if (response.status === 200) {
         alert('App registered successfully!');
         setFormData({ name: '', logo: '', details: '', domain: '' });
         onRegister();
       }
     } catch (error) {
+      alert('Error occurred while registering')
       console.error('Error registering app:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}class="form-container" action='/api/v1/appSave' method='
-    POST'>
+    <form onSubmit={handleSubmit}class="form-container" >
     <h2>Register App</h2>
     <table>
     <tbody>
@@ -42,8 +46,8 @@ const Register = ({ onRegister }) => {
         <td><input type="text" id="name" name="name" required onChange={handleChange}/></td>
       </tr>
       <tr>
-        <td><label for="logo">Logo URL</label></td>
-        <td><input type="text" id="logo" name="logo" required onChange={handleChange}/></td>
+        <td><label for="logo">Logo</label></td>
+        <td><input type="file" id="logo" name="logo" required onChange={handleChange}/></td>
       </tr>
       <tr>
         <td><label for="details">Details</label></td>
@@ -51,7 +55,7 @@ const Register = ({ onRegister }) => {
       </tr>
       <tr>
         <td><label for="url">URL</label></td>
-        <td><input type="text" id="url" name="url" required onChange={handleChange}/></td>
+        <td><input type="url" id="url" name="url" required onChange={handleChange}/></td>
       </tr>
       <tr>
         <td colSpan={2}>
